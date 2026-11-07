@@ -22,4 +22,4 @@ node --test tests/logic.test.mjs
 
 ## Seiten
 
-GitHub Pages dient die Repository-Wurzel unter dem Pfad `/rechenkoenig-app/` aus. Der erste Aufruf braucht Netz, bis unten „Bereit für offline auf diesem Gerät“ steht. Danach laden Startseite und `index.html` aus dem Speicher dieser App.
+Die Adresse dieser Projektseite ist `https://adamv1001.github.io/rechenkoenig-app/`. Der Workflow `.github/workflows/pages.yml` veröffentlicht den Stand von `main`. Der erste Aufruf braucht Netz, bis unten „Bereit für offline auf diesem Gerät“ steht. Danach laden Startseite und `index.html` aus dem Speicher dieser App.
