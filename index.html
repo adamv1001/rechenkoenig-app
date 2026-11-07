@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Rechenübungen bis 20, 50 oder 100 für die zweite Klasse. Offline nutzbar.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'unsafe-inline'; connect-src 'self'; worker-src 'self'; manifest-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'none'">
+  <meta name="theme-color" content="#205d63">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Rechenkönig">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <title>Rechenkönig</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+  <link rel="icon" href="./icon-192.png" type="image/png">
+  <style>
+    :root {
+      color-scheme: light dark;
+      --paper: #faf9f6;
+      --ink: #182f33;
+      --muted: #4c6063;
+      --line: #b6c5c5;
+      --key: #fff;
+      --accent: #205d63;
+      --on: #fff;
+      --good: #246544;
+    }
+    * { box-sizing: border-box; }
+    html, body { overflow-x: hidden; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 21px;
+      line-height: 1.4;
+      -webkit-text-size-adjust: 100%;
+      touch-action: manipulation;
+    }
+    main {
+      max-width: 600px;
+      margin: auto;
+      padding: 24px 16px 36px;
+      padding-top: max(24px, env(safe-area-inset-top));
+      padding-left: max(16px, env(safe-area-inset-left));
+      padding-right: max(16px, env(safe-area-inset-right));
+      padding-bottom: max(36px, env(safe-area-inset-bottom));
+    }
+    header { border-bottom: 2px solid var(--line); padding-bottom: 18px; }
+    .eyebrow { font-size: 16px; letter-spacing: .08em; color: var(--muted); }
+    h1 { font-size: clamp(32px, 8vw, 42px); line-height: 1.12; margin: 8px 0; }
+    h2, legend { font-size: 24px; font-weight: 700; }
+    p { margin: 14px 0; }
+    fieldset { border: 0; padding: 0; margin: 24px 0; }
+    legend { padding: 0; margin-bottom: 12px; }
+    .choices { display: flex; flex-wrap: wrap; gap: 8px; }
+    .choices button { flex: 1 1 90px; }
+    button {
+      font: inherit;
+      font-weight: 700;
+      background: var(--key);
+      color: var(--ink);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px 10px;
+      min-height: 60px;
+      min-width: 0;
+      cursor: pointer;
+      touch-action: manipulation;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-touch-callout: none;
+    }
+    button:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+    button:disabled { opacity: .45; cursor: default; }
+    .primary, button[aria-pressed="true"] {
+      background: var(--accent);
+      color: var(--on);
+      border-color: var(--accent);
+    }
+    .wide { width: 100%; }
+    .small { font-size: 18px; color: var(--muted); }
+    .topline {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 8px;
+      margin: 18px 0;
+      font-size: 19px;
+    }
+    .sum {
+      font-size: clamp(36px, 10vw, 56px);
+      text-align: center;
+      font-weight: 750;
+      margin: 18px 0 8px;
+      font-variant-numeric: tabular-nums;
+    }
+    .answer {
+      font-size: 38px;
+      text-align: center;
+      min-height: 62px;
+      border-bottom: 2px solid var(--line);
+      margin-bottom: 16px;
+      font-variant-numeric: tabular-nums;
+      overflow-wrap: anywhere;
+    }
+    .keys {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .digit { font-size: 30px; }
+    .action { font-size: 18px; }
+    .feedback { margin: 18px 0; overflow-wrap: anywhere; }
+    .good { font-size: 25px; font-weight: 700; color: var(--good); }
+    .score { font-variant-numeric: tabular-nums; }
+    .back { margin-top: 20px; }
+    progress { width: 100%; height: 10px; accent-color: var(--accent); }
+    footer {
+      font-size: 16px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      padding-top: 16px;
+      margin-top: 28px;
+    }
+    [hidden] { display: none !important; }
+    @media (max-height: 820px) {
+      main {
+        padding-top: max(10px, env(safe-area-inset-top));
+        padding-bottom: max(16px, env(safe-area-inset-bottom));
+      }
+      header { padding-bottom: 10px; }
+      header p { display: none; }
+      h1 { font-size: 30px; margin: 4px 0; }
+      fieldset { margin: 16px 0; }
+      .topline { margin: 10px 0; }
+      .sum { font-size: 34px; margin: 8px 0 4px; }
+      .answer { font-size: 32px; min-height: 48px; margin-bottom: 8px; }
+      button { min-height: 52px; padding: 8px; }
+      .digit { font-size: 28px; }
+      .feedback { margin: 10px 0; }
+      .back { margin-top: 12px; }
+      footer { margin-top: 16px; }
+    }
+    @media (max-width: 420px) {
+      body { font-size: 19px; }
+      .action { font-size: 16px; }
+    }
+    @media (min-width: 768px) and (min-height: 900px) {
+      main { max-width: 720px; padding-left: 28px; padding-right: 28px; }
+      button { min-height: 72px; }
+      .digit { font-size: 36px; }
+      .sum { font-size: 64px; }
+      .keys { gap: 12px; }
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --paper: #172427;
+        --ink: #edf5f3;
+        --muted: #b2c5c4;
+        --line: #617979;
+        --key: #233639;
+        --accent: #a1d7d6;
+        --on: #142e32;
+        --good: #a8dfb3;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div class="eyebrow">RECHENZEIT</div>
+      <h1>Rechenkönig</h1>
+      <p>Kleine Schritte. Großes Können.</p>
+    </header>
+    <noscript><p>Hier läuft JavaScript nicht. Öffne die Seite in einem Browser mit JavaScript. Die Vorschau in „Dateien“ reicht oft nicht.</p></noscript>
+    <div id="app"></div>
+    <footer>
+      <span id="offline-status" role="status">Offline-Speicher wird vorbereitet …</span><br>
+      Ohne Töne · Nur Tipptasten<br>
+      Die Auswahl wird gespeichert, wenn der Browser es erlaubt. Beim Schließen endet die Runde.
+    </footer>
+  </main>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
