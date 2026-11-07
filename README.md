@@ -22,4 +22,4 @@ node --test tests/logic.test.mjs
 
 ## Seiten
 
-Die Adresse dieser Projektseite ist `https://adamv1001.github.io/rechenkoenig-app/`. Der Workflow `.github/workflows/pages.yml` veröffentlicht den Stand von `main`. Der erste Aufruf braucht Netz, bis unten „Bereit für offline auf diesem Gerät“ steht. Danach laden Startseite und `index.html` aus dem Speicher dieser App.
+Die Projektadresse ist `https://adamv1001.github.io/rechenkoenig-app/`, sobald GitHub Pages für den Branch `main` und den Ordner `/` (root) eingeschaltet ist. Der erste Aufruf braucht Netz, bis unten „Bereit für offline auf diesem Gerät“ steht. Danach laden Startseite und `index.html` aus dem Speicher dieser App.
